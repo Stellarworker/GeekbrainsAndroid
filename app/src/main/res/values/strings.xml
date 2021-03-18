@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">AndroidLevel1</string>
+    <string name="textView">TextView</string>
+    <string name="editText">EditText</string>
+    <string name="button">button</string>
+    <string name="checkbox">CheckBox</string>
+    <string name="toggleButtonOn">ToggleButton включена</string>
+    <string name="toggleButtonOff">ToggleButton выключена</string>
+    <string name="mainSwitch">Switch</string>
+    <string name="editText1">text</string>
+    <string name="editText2">textPersonName</string>
+    <string name="editText3">phone</string>
+    <string name="editText4">number</string>
+    <string name="editText5">textPassword</string>
+    <string name="editText6">textEmailAddress</string>
+    <string name="editText7">textUri</string>
+    <string name="editText8">datetime</string>
 </resources>
