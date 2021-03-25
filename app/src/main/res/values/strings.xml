@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">AndroidLevel1</string>
-
     <string name="buttonDigit1">1</string>
     <string name="buttonDigit2">2</string>
     <string name="buttonDigit3">3</string>
@@ -11,19 +10,13 @@
     <string name="buttonDigit8">8</string>
     <string name="buttonDigit9">9</string>
     <string name="buttonDigit0">0</string>
-
     <string name="buttonPlus">+</string>
     <string name="buttonMinus">−</string>
     <string name="buttonMultiplication">×</string>
     <string name="buttonDivision">÷</string>
     <string name="buttonEqual">=</string>
-
     <string name="buttonC">C</string>
     <string name="buttonToggleSign">+/-</string>
     <string name="buttonDot">.</string>
-
     <string name="initialValue">0</string>
-
-
-
 </resources>

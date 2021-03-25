@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="buttonHorizontalMargin">3dp</dimen>
+    <dimen name="equalButtonHorizontalMargin">6dp</dimen>
     <dimen name="displayTextSize">40sp</dimen>
     <dimen name="displayMarginTop">20dp</dimen>
     <dimen name="displayMarginBottom">20dp</dimen>

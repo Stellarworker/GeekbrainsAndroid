@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sunrise_vert"
+    android:background="@drawable/sunrise_horiz"
     android:orientation="vertical"
     android:paddingStart="@dimen/commonPadding"
     android:paddingEnd="@dimen/commonPadding">
@@ -27,40 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:columnCount="4">
-
-        <TableRow>
-
-            <Button
-                android:id="@+id/buttonC"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonC"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/buttonToggleSign"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonToggleSign"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/buttonDot"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDot"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/buttonDivision"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDivision"
-                tools:ignore="ButtonStyle" />
-        </TableRow>
+        android:columnCount="6">
 
         <TableRow>
 
@@ -87,12 +54,30 @@
                 android:text="@string/buttonDigit9"
                 tools:ignore="ButtonStyle" />
 
+
             <Button
-                android:id="@+id/buttonMultiplication"
+                android:id="@+id/buttonC"
+                android:layout_marginStart="@dimen/buttonHorizontalMargin"
+                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
+                android:layout_weight="1"
+                android:text="@string/buttonC"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/buttonToggleSign"
+                android:layout_marginStart="@dimen/buttonHorizontalMargin"
+                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
+                android:layout_weight="1"
+                android:text="@string/buttonToggleSign"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/buttonDot"
                 android:layout_marginStart="@dimen/buttonHorizontalMargin"
                 android:layout_weight="1"
-                android:text="@string/buttonMultiplication"
+                android:text="@string/buttonDot"
                 tools:ignore="ButtonStyle" />
+
         </TableRow>
 
         <TableRow>
@@ -123,9 +108,26 @@
             <Button
                 android:id="@+id/buttonMinus"
                 android:layout_marginStart="@dimen/buttonHorizontalMargin"
+                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
                 android:layout_weight="1"
                 android:text="@string/buttonMinus"
                 tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/buttonPlus"
+                android:layout_marginStart="@dimen/buttonHorizontalMargin"
+                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
+                android:layout_weight="1"
+                android:text="@string/buttonPlus"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/buttonDivision"
+                android:layout_marginStart="@dimen/buttonHorizontalMargin"
+                android:layout_weight="1"
+                android:text="@string/buttonDivision"
+                tools:ignore="ButtonStyle" />
+
         </TableRow>
 
         <TableRow>
@@ -154,24 +156,24 @@
                 tools:ignore="ButtonStyle" />
 
             <Button
-                android:id="@+id/buttonPlus"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonPlus"
-                tools:ignore="ButtonStyle" />
-        </TableRow>
-
-        <TableRow>
-
-            <Button
                 android:id="@+id/buttonDigit0"
+                android:layout_marginStart="@dimen/buttonHorizontalMargin"
+                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
                 android:layout_weight="1"
                 android:text="@string/buttonDigit0"
                 tools:ignore="ButtonStyle" />
 
             <Button
+                android:id="@+id/buttonMultiplication"
+                android:layout_marginStart="@dimen/buttonHorizontalMargin"
+                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
+                android:layout_weight="1"
+                android:text="@string/buttonMultiplication"
+                tools:ignore="ButtonStyle" />
+
+            <Button
                 android:id="@+id/buttonEqual"
-                android:layout_marginStart="@dimen/equalButtonHorizontalMargin"
+                android:layout_marginStart="@dimen/buttonHorizontalMargin"
                 android:layout_weight="1"
                 android:text="@string/buttonEqual"
                 tools:ignore="ButtonStyle" />
