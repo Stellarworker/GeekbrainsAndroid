@@ -3,6 +3,7 @@ package com.geekbrains.androidlevel1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -13,31 +14,19 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     private Calculator calculator = new Calculator();
-    private String calculatorKey = "calculatorKey";
+    private final int[] numberButtonIds = new int[]{R.id.buttonDigit0, R.id.buttonDigit1, R.id.buttonDigit2, R.id.buttonDigit3,
+            R.id.buttonDigit4, R.id.buttonDigit5, R.id.buttonDigit6, R.id.buttonDigit7, R.id.buttonDigit8, R.id.buttonDigit9};
+    private final int[] actionButtonIds = new int[]{R.id.buttonPlus, R.id.buttonMinus, R.id.buttonMultiplication, R.id.buttonDivision};
+    private final String calculatorKey = "calculatorKey";
     private TextView calcDisplay;
-    private String displayTextKey = "displayTextKey";
+    private final String displayTextKey = "displayTextKey";
     private Button buttonC;
     private Button buttonToggleSign;
     private Button buttonDot;
-    private Button buttonDivision;
-    private Button buttonDigit7;
-    private Button buttonDigit8;
-    private Button buttonDigit9;
-    private Button buttonMultiplication;
-    private Button buttonDigit4;
-    private Button buttonDigit5;
-    private Button buttonDigit6;
-    private Button buttonMinus;
-    private Button buttonDigit1;
-    private Button buttonDigit2;
-    private Button buttonDigit3;
-    private Button buttonPlus;
-    private Button buttonDigit0;
     private Button buttonEqual;
     private final int MAXIMUM_SYMBOLS = 15;
-
     private boolean clearDisplayFlag = false;
-    private String clearDisplayFlagKey = "clearDisplayFlagKey";
+    private final String clearDisplayFlagKey = "clearDisplayFlagKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViews();
         setButtonsBehavior();
-        Objects.requireNonNull(getSupportActionBar()).hide();
     }
 
     // Сохраняем состояние калькулятора перед поворотом экрана.
@@ -68,47 +56,37 @@ public class MainActivity extends AppCompatActivity {
 
     // Метод находит элементы окна калькулятора.
     private void findViews() {
-        calcDisplay = (TextView) findViewById(R.id.calcDisplay);
-        buttonC = (Button) findViewById(R.id.buttonC);
-        buttonToggleSign = (Button) findViewById(R.id.buttonToggleSign);
-        buttonDot = (Button) findViewById(R.id.buttonDot);
-        buttonDivision = (Button) findViewById(R.id.buttonDivision);
-        buttonDigit7 = (Button) findViewById(R.id.buttonDigit7);
-        buttonDigit8 = (Button) findViewById(R.id.buttonDigit8);
-        buttonDigit9 = (Button) findViewById(R.id.buttonDigit9);
-        buttonMultiplication = (Button) findViewById(R.id.buttonMultiplication);
-        buttonDigit4 = (Button) findViewById(R.id.buttonDigit4);
-        buttonDigit5 = (Button) findViewById(R.id.buttonDigit5);
-        buttonDigit6 = (Button) findViewById(R.id.buttonDigit6);
-        buttonMinus = (Button) findViewById(R.id.buttonMinus);
-        buttonDigit1 = (Button) findViewById(R.id.buttonDigit1);
-        buttonDigit2 = (Button) findViewById(R.id.buttonDigit2);
-        buttonDigit3 = (Button) findViewById(R.id.buttonDigit3);
-        buttonPlus = (Button) findViewById(R.id.buttonPlus);
-        buttonDigit0 = (Button) findViewById(R.id.buttonDigit0);
-        buttonEqual = (Button) findViewById(R.id.buttonEqual);
+        calcDisplay = findViewById(R.id.calcDisplay);
+        buttonC = findViewById(R.id.buttonC);
+        buttonToggleSign = findViewById(R.id.buttonToggleSign);
+        buttonDot = findViewById(R.id.buttonDot);
+        buttonEqual = findViewById(R.id.buttonEqual);
     }
 
     // Метод задаёт обработчики нажатий кнопок.
     private void setButtonsBehavior() {
+        setNumberButtonListeners();
+        setActionButtonListeners();
         setButtonCBehavior();
         setButtonToggleSignBehavior();
         setButtonDotBehavior();
-        setButtonDivisionBehavior();
-        setButtonDigit7Behavior();
-        setButtonDigit8Behavior();
-        setButtonDigit9Behavior();
-        setButtonMultiplicationBehavior();
-        setButtonDigit4Behavior();
-        setButtonDigit5Behavior();
-        setButtonDigit6Behavior();
-        setButtonMinusBehavior();
-        setButtonDigit1Behavior();
-        setButtonDigit2Behavior();
-        setButtonDigit3Behavior();
-        setButtonPlusBehavior();
-        setButtonDigit0Behavior();
         setButtonEqualBehavior();
+    }
+
+    // Метод задаёт поведение кнопкам с цифрами.
+    private void setNumberButtonListeners() {
+        for (int i = 0; i < numberButtonIds.length; i++) {
+            int finalI = i;
+            findViewById(numberButtonIds[i]).setOnClickListener(v -> addDigit(String.valueOf(finalI)));
+        }
+    }
+
+    // Метод задаёёт поведение кнопкам с арифметическими действиями.
+    private void setActionButtonListeners() {
+        for (int i = 0; i < actionButtonIds.length; i++) {
+            int finalI = i;
+            findViewById(actionButtonIds[i]).setOnClickListener(v -> makeAction(finalI + 1));
+        }
     }
 
     // Метод задаёт обработчик кнопки "C".
@@ -116,11 +94,11 @@ public class MainActivity extends AppCompatActivity {
         buttonC.setOnClickListener(v -> {
             String textBuffer = (String) calcDisplay.getText();
 
-            if (textBuffer.equals("0")) {
+            if (textBuffer.equals(getResources().getString(R.string.initialValue))) {
                 calculator.reset();
-                Toast.makeText(getApplicationContext(), "Reset done!", Toast.LENGTH_SHORT).show();
+                warnUserAboutResetDone();
             } else {
-                calcDisplay.setText("0");
+                calcDisplay.setText(getResources().getString(R.string.initialValue));
             }
 
         });
@@ -131,11 +109,11 @@ public class MainActivity extends AppCompatActivity {
         buttonToggleSign.setOnClickListener(v -> {
             String textBuffer = (String) calcDisplay.getText();
 
-            if (textBuffer.contains("-")) {
+            if (textBuffer.contains(getResources().getString(R.string.minusSymbol))) {
                 textBuffer = textBuffer.substring(1);
             } else {
-                if (!textBuffer.equals("0")) {
-                    textBuffer = "-" + textBuffer;
+                if (!textBuffer.equals(getResources().getString(R.string.initialValue))) {
+                    textBuffer = getResources().getString(R.string.minusSymbol) + textBuffer;
                 }
             }
 
@@ -150,110 +128,12 @@ public class MainActivity extends AppCompatActivity {
 
             if (textBuffer.length() >= MAXIMUM_SYMBOLS) {
                 warnUserAboutMaximumDigits(MAXIMUM_SYMBOLS);
-            } else if (!textBuffer.contains(".")) {
-                textBuffer += ".";
+            } else if (!textBuffer.contains(getResources().getString(R.string.dotSymbol))) {
+                textBuffer += getResources().getString(R.string.dotSymbol);
                 calcDisplay.setText(textBuffer);
                 clearDisplayFlag = false;
             }
 
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "÷".
-    private void setButtonDivisionBehavior() {
-        buttonDivision.setOnClickListener(v -> {
-            makeAction(4);
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "7".
-    private void setButtonDigit7Behavior() {
-        buttonDigit7.setOnClickListener(v -> {
-            addDigit("7");
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "8".
-    private void setButtonDigit8Behavior() {
-        buttonDigit8.setOnClickListener(v -> {
-            addDigit("8");
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "9".
-    private void setButtonDigit9Behavior() {
-        buttonDigit9.setOnClickListener(v -> {
-            addDigit("9");
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "×".
-    private void setButtonMultiplicationBehavior() {
-        buttonMultiplication.setOnClickListener(v -> {
-            makeAction(3);
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "4".
-    private void setButtonDigit4Behavior() {
-        buttonDigit4.setOnClickListener(v -> {
-            addDigit("4");
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "5".
-    private void setButtonDigit5Behavior() {
-        buttonDigit5.setOnClickListener(v -> {
-            addDigit("5");
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "6".
-    private void setButtonDigit6Behavior() {
-        buttonDigit6.setOnClickListener(v -> {
-            addDigit("6");
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "−".
-    private void setButtonMinusBehavior() {
-        buttonMinus.setOnClickListener(v -> {
-            makeAction(2);
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "1".
-    private void setButtonDigit1Behavior() {
-        buttonDigit1.setOnClickListener(v -> {
-            addDigit("1");
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "2".
-    private void setButtonDigit2Behavior() {
-        buttonDigit2.setOnClickListener(v -> {
-            addDigit("2");
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "3".
-    private void setButtonDigit3Behavior() {
-        buttonDigit3.setOnClickListener(v -> {
-            addDigit("3");
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "+".
-    private void setButtonPlusBehavior() {
-        buttonPlus.setOnClickListener(v -> {
-            makeAction(1);
-        });
-    }
-
-    // Метод задаёт обработчик кнопки "0".
-    private void setButtonDigit0Behavior() {
-        buttonDigit0.setOnClickListener(v -> {
-            addDigit("0");
         });
     }
 
@@ -277,8 +157,8 @@ public class MainActivity extends AppCompatActivity {
                     calcDisplay.setText(textBuffer);
                     clearDisplayFlag = true;
                 } else {
-                    Toast.makeText(getApplicationContext(), "Cannot divide by zero!", Toast.LENGTH_SHORT).show();
-                    calcDisplay.setText("0");
+                    warnUserAboutDivisionByZero();
+                    calcDisplay.setText(getResources().getString(R.string.initialValue));
                 }
 
                 calculator.reset();
@@ -291,11 +171,11 @@ public class MainActivity extends AppCompatActivity {
         String textBuffer = (String) calcDisplay.getText();
 
         if (clearDisplayFlag) {
-            textBuffer = "0";
+            textBuffer = getResources().getString(R.string.initialValue);
             clearDisplayFlag = false;
         }
 
-        if (textBuffer.equals("0")) {
+        if (textBuffer.equals(getResources().getString(R.string.initialValue))) {
             textBuffer = digit;
         } else if (textBuffer.length() >= MAXIMUM_SYMBOLS) {
             warnUserAboutMaximumDigits(MAXIMUM_SYMBOLS);
@@ -316,6 +196,24 @@ public class MainActivity extends AppCompatActivity {
 
     // Метод выводит предупреждение пользователю о максимальном количестве цифр на дисплее.
     private void warnUserAboutMaximumDigits(int number) {
-        Toast.makeText(getApplicationContext(), "Maximum symbols: " + number + "!", Toast.LENGTH_SHORT).show();
+        String message = getResources().getString(R.string.maximumSymbols) + " " + number + "!";
+        warnUser(message);
+    }
+
+    // Метод выводит предупреждение пользователю о попытке деления на ноль.
+    private void warnUserAboutDivisionByZero() {
+        String message = getResources().getString(R.string.cannotDivideByZero);
+        warnUser(message);
+    }
+
+    // Метод выводит предупреждение пользователю о сбросе калькулятора.
+    private void warnUserAboutResetDone() {
+        String message = getResources().getString(R.string.resetDone);
+        warnUser(message);
+    }
+
+    // Метод позволяет выводить предупреждения пользователю.
+    private void warnUser(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

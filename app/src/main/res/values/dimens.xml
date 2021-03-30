@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="buttonHorizontalMargin">3dp</dimen>
+    <dimen name="buttonTextSize">20sp</dimen>
     <dimen name="equalButtonHorizontalMargin">6dp</dimen>
     <dimen name="displayTextSize">40sp</dimen>
     <dimen name="displayMarginTop">20dp</dimen>
     <dimen name="displayMarginBottom">20dp</dimen>
     <dimen name="displayPadding">10dp</dimen>
     <dimen name="commonPadding">20dp</dimen>
+    <dimen name="keyboardMarginBottom">20dp</dimen>
 </resources>
