@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/sunrise_vert"
@@ -8,173 +7,124 @@
     android:paddingStart="@dimen/commonPadding"
     android:paddingEnd="@dimen/commonPadding">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/calcDisplay"
+        style="@style/calcDisplayStyle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/displayMarginTop"
-        android:layout_marginBottom="@dimen/displayMarginBottom"
-        android:layout_weight="1"
-        android:background="@color/white"
         android:gravity="end|bottom"
-        android:padding="@dimen/displayPadding"
-        android:text="@string/initialValue"
-        android:textColor="@color/black"
-        android:textSize="@dimen/displayTextSize" />
+        android:text="@string/initialValue" />
 
     <TableLayout
         android:id="@+id/calcKeyboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/keyboardMarginBottom"
         android:columnCount="4">
 
         <TableRow>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonC"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonC"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcOuterLeftButtonStyle"
+                android:text="@string/buttonC" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonToggleSign"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonToggleSign"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcInnerButtonStyle"
+                android:text="@string/buttonToggleSign" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDot"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDot"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcInnerButtonStyle"
+                android:text="@string/buttonDot" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDivision"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDivision"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcOuterRightButtonStyle"
+                android:text="@string/buttonDivision" />
         </TableRow>
 
         <TableRow>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDigit7"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDigit7"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcOuterLeftButtonStyle"
+                android:text="@string/buttonDigit7" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDigit8"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDigit8"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcInnerButtonStyle"
+                android:text="@string/buttonDigit8" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDigit9"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDigit9"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcInnerButtonStyle"
+                android:text="@string/buttonDigit9" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonMultiplication"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonMultiplication"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcOuterRightButtonStyle"
+                android:text="@string/buttonMultiplication" />
         </TableRow>
 
         <TableRow>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDigit4"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDigit4"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcOuterLeftButtonStyle"
+                android:text="@string/buttonDigit4" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDigit5"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDigit5"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcInnerButtonStyle"
+                android:text="@string/buttonDigit5" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDigit6"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDigit6"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcInnerButtonStyle"
+                android:text="@string/buttonDigit6" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonMinus"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonMinus"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcOuterRightButtonStyle"
+                android:text="@string/buttonMinus" />
         </TableRow>
 
         <TableRow>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDigit1"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDigit1"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcOuterLeftButtonStyle"
+                android:text="@string/buttonDigit1" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDigit2"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDigit2"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcInnerButtonStyle"
+                android:text="@string/buttonDigit2" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDigit3"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_marginEnd="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonDigit3"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcInnerButtonStyle"
+                android:text="@string/buttonDigit3" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonPlus"
-                android:layout_marginStart="@dimen/buttonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonPlus"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcOuterRightButtonStyle"
+                android:text="@string/buttonPlus" />
         </TableRow>
 
         <TableRow>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDigit0"
-                android:layout_weight="1"
-                android:text="@string/buttonDigit0"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcOuterLeftButtonStyle"
+                android:text="@string/buttonDigit0" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonEqual"
-                android:layout_marginStart="@dimen/equalButtonHorizontalMargin"
-                android:layout_weight="1"
-                android:text="@string/buttonEqual"
-                tools:ignore="ButtonStyle" />
+                style="@style/calcOuterRightButtonStyle"
+                android:text="@string/buttonEqual" />
         </TableRow>
     </TableLayout>
 </LinearLayout>
