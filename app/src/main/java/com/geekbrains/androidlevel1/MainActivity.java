@@ -3,6 +3,7 @@ package com.geekbrains.androidlevel1;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
@@ -12,25 +13,30 @@ import android.widget.Toast;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-
     private Calculator calculator = new Calculator();
     private final int[] numberButtonIds = new int[]{R.id.buttonDigit0, R.id.buttonDigit1, R.id.buttonDigit2, R.id.buttonDigit3,
             R.id.buttonDigit4, R.id.buttonDigit5, R.id.buttonDigit6, R.id.buttonDigit7, R.id.buttonDigit8, R.id.buttonDigit9};
     private final int[] actionButtonIds = new int[]{R.id.buttonPlus, R.id.buttonMinus, R.id.buttonMultiplication, R.id.buttonDivision};
     private final String calculatorKey = "calculatorKey";
-    private TextView calcDisplay;
     private final String displayTextKey = "displayTextKey";
+    private final String clearDisplayFlagKey = "clearDisplayFlagKey";
+    private TextView calcDisplay;
+    private Button buttonSettings;
     private Button buttonC;
     private Button buttonToggleSign;
     private Button buttonDot;
     private Button buttonEqual;
     private final int MAXIMUM_SYMBOLS = 15;
     private boolean clearDisplayFlag = false;
-    private final String clearDisplayFlagKey = "clearDisplayFlagKey";
+    private static final String NameSharedPreference = "LOGIN";
+    private static final String appTheme = "APP_THEME";
+    private static final int LIGHT_THEME = 0;
+    private static final int DARK_THEME = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(getAppTheme(R.style.calculatorLight));
         setContentView(R.layout.activity_main);
         findViews();
         setButtonsBehavior();
@@ -54,6 +60,14 @@ public class MainActivity extends AppCompatActivity {
         clearDisplayFlag = savedInstanceState.getBoolean(clearDisplayFlagKey);
     }
 
+    // Если пользователь возвращается к этой активити - перерисовываем её.
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
     // Метод находит элементы окна калькулятора.
     private void findViews() {
         calcDisplay = findViewById(R.id.calcDisplay);
@@ -61,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         buttonToggleSign = findViewById(R.id.buttonToggleSign);
         buttonDot = findViewById(R.id.buttonDot);
         buttonEqual = findViewById(R.id.buttonEqual);
+        buttonSettings = findViewById(R.id.buttonSettings);
     }
 
     // Метод задаёт обработчики нажатий кнопок.
@@ -71,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         setButtonToggleSignBehavior();
         setButtonDotBehavior();
         setButtonEqualBehavior();
+        setButtonSettingsBehavior();
     }
 
     // Метод задаёт поведение кнопкам с цифрами.
@@ -216,4 +232,26 @@ public class MainActivity extends AppCompatActivity {
     private void warnUser(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
+
+    // Метод привязывает запуск активити с настройками к кнопке SETTINGS.
+    private void setButtonSettingsBehavior() {
+        buttonSettings.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Settings.class);
+            startActivity(intent);
+        });
+    }
+
+    private int getAppTheme(int codeStyle) {
+        return codeStyleToStyleId(getCodeStyle(codeStyle));
+    }
+
+    private int getCodeStyle(int codeStyle) {
+        SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference, MODE_PRIVATE);
+        return sharedPref.getInt(appTheme, codeStyle);
+    }
+
+    private int codeStyleToStyleId(int codeStyle) {
+        return (codeStyle == 1) ? R.style.calculatorDark : R.style.calculatorLight;
+    }
+
 }

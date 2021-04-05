@@ -8,4 +8,22 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="green">#10B54D</color>
+    <!-- Light theme colors -->
+    <color name="colorPrimaryLight">#bec7f7</color>
+    <color name="colorPrimaryVariantLight">#9198bd</color>
+    <color name="colorOnPrimaryLight">#000000</color>
+    <color name="colorSecondaryLight">#FF6200EE</color>
+    <color name="colorSecondaryVariantLight">#FF3700B3</color>
+    <color name="colorOnSecondaryLight">#FFFFFF</color>
+    <color name="colorSurfaceLight">#FFFFFF</color>
+    <color name="colorOnSurfaceLight">#000000</color>
+    <!-- Dark theme colors -->
+    <color name="colorPrimaryDark">#4A4A4A</color>
+    <color name="colorPrimaryVariantDark">#000000</color>
+    <color name="colorOnPrimaryDark">#FFFFFF</color>
+    <color name="colorSecondaryDark">#735937</color>
+    <color name="colorSecondaryVariantDark">#302516</color>
+    <color name="colorOnSecondaryDark">#FFFFFF</color>
+    <color name="colorSurfaceDark">#000000</color>
+    <color name="colorOnSurfaceDark">#FFFFFF</color>
 </resources>
