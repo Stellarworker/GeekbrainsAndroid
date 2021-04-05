@@ -3,19 +3,29 @@
 
     <style name="calcDisplayStyle">
         <item name="android:textSize">@dimen/displayTextSize</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:background">@color/white</item>
         <item name="android:padding">@dimen/displayPadding</item>
+        <item name="android:background">?colorSurface</item>
+        <item name="android:textColor">?colorOnSurface</item>
         <item name="android:layout_marginTop">@dimen/displayMarginTop</item>
         <item name="android:layout_marginBottom">@dimen/displayMarginBottom</item>
-        <item name="android:layout_weight">1</item>
+        <item name="android:layout_weight">4</item>
         <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="calcDisplayStyleLand" parent="calcDisplayStyle">
+        <item name="android:textSize">@dimen/displayTextSizeLand</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="SettingsButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_marginTop">@dimen/buttonSettingsMarginTop</item>
+        <item name="android:layout_marginBottom">@dimen/buttonSettingsMarginBottom</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
     <style name="calcInnerButtonStyle" parent="Widget.MaterialComponents.Button">
         <item name="android:layout_marginLeft">@dimen/buttonHorizontalMargin</item>
         <item name="android:layout_marginRight">@dimen/buttonHorizontalMargin</item>
-        <item name="android:backgroundTint">@color/green</item>
         <item name="android:textSize">@dimen/buttonTextSize</item>
         <item name="android:layout_weight">1</item>
     </style>
@@ -26,5 +36,15 @@
 
     <style name="calcOuterRightButtonStyle" parent="calcInnerButtonStyle">
         <item name="android:layout_marginRight">0dp</item>
+    </style>
+
+    <style name="settingsView">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:typeface">monospace</item>
+    </style>
+
+    <style name="chooseThemeButtonGroup">
+        <item name="android:layout_marginTop">20dp</item>
     </style>
 </resources>
