@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AndroidLevel1</string>
+    <string name="noteInfoScreenTitle">Заметки</string>
+    <string name="noteDataScreenTitle">NoteData</string>
 </resources>
