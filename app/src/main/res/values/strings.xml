@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">AndroidLevel1</string>
     <string name="noteInfoScreenTitle">Заметки</string>
-    <string name="noteDataScreenTitle">NoteData</string>
+    <string name="aboutScreenTitle">О программе</string>
+    <string name="settingsScreenTitle">Настройки</string>
+    <string name="dummyScreenMessage">Выберите заметку</string>
+    <string name="underConstructionMessage">В разработке</string>
+    <string name="aboutScreenMessage">Версия: 0.2</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="fragment_navigation">Заметки</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
 </resources>

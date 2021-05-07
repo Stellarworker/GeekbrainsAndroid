@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+// Этот класс представляет заметку.
 public class Note implements Parcelable {
     private String title;
     private String description;
