@@ -1,6 +1,5 @@
 package com.geekbrains.androidlevel1;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,17 +15,29 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.geekbrains.androidlevel1.FragmentTypes.FragmentType;
+
+
 import com.geekbrains.androidlevel1.event_bus.EventBus;
 
+// Этот фрагмент позволяет просматривать список заметок.
 public class NoteInfoListFragment extends Fragment {
+    private final FragmentType fragmentType = FragmentType.NOTE_INFO_LIST;
     private boolean isLandscape;
-    public static final String CURRENT_NOTE = "CurrentNote";
     private static final String DATE_FORMAT_PATTERN = "dd.MM.yyyy";
-    private Note currentNote;
+    private Note[] notes;
+
+    public static NoteInfoListFragment newInstance() {
+        NoteInfoListFragment f = new NoteInfoListFragment();
+        Bundle args = new Bundle();
+        f.setArguments(args);
+        return f;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,7 +47,8 @@ public class NoteInfoListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initList(view);
+        loadNotes();
+        refreshNoteList(view);
     }
 
     @Override
@@ -51,41 +63,42 @@ public class NoteInfoListFragment extends Fragment {
         super.onStop();
     }
 
-    private void initList(View view) {
-        LinearLayout layoutView = (LinearLayout) view;
-        String[] noteTitles = getResources().getStringArray(R.array.noteTitle);
-        String[] noteDescriptions = getResources().getStringArray(R.array.noteDescription);
-        String[] noteDates = getResources().getStringArray(R.array.noteDate);
-        String[] noteTexts = getResources().getStringArray(R.array.noteText);
+    private void loadNotes() {
+        NotesSaveLoadBehavior notesObject = new DefaultNotesLoad();
+        notes = notesObject.getNotes();
+    }
 
-        for (int i = 0; i < 2; i++) {
+    private void refreshNoteList(View view) {
+        LinearLayout layoutView = (LinearLayout) view;
+        for (int i = 0; i < notes.length; i++) {
             CardView noteContainer = new CardView(getContext());
             LinearLayout noteLayout = new LinearLayout(getContext());
             noteLayout.setOrientation(LinearLayout.VERTICAL);
             TextView noteTitle = new TextView(getContext());
-            noteTitle.setTextSize(20);
-            noteTitle.setText(noteTitles[i]);
+            noteTitle.setTextSize(getResources().getDimension(R.dimen.noteTitleTextSize));
+            noteTitle.setText(notes[i].getTitle());
             TextView noteDescription = new TextView(getContext());
-            noteDescription.setText(noteDescriptions[i]);
+            noteDescription.setTextSize(getResources().getDimension(R.dimen.noteInfoTextSize));
+            noteDescription.setText(notes[i].getDescription());
             TextView noteDate = new TextView(getContext());
-            noteDate.setText(noteDates[i]);
+            DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_PATTERN);
+            noteDate.setTextSize(getResources().getDimension(R.dimen.noteInfoTextSize));
+            noteDate.setText(dateFormat.format(notes[i].getDate()));
             noteLayout.addView(noteTitle);
             noteLayout.addView(noteDescription);
             noteLayout.addView(noteDate);
             noteContainer.addView(noteLayout);
             layoutView.addView(noteContainer);
             final int fi = i;
-            final Date finalNoteDate = stringToDate(DATE_FORMAT_PATTERN, noteDates[i]);
             noteContainer.setOnClickListener((v) -> {
-                currentNote = new Note(noteTitles[fi], noteDescriptions[fi], noteTexts[fi], finalNoteDate);
-                openNote(currentNote);
+                OpenNoteBehavior activity = (OpenNoteBehavior) getActivity();
+                activity.openNote(notes[fi]);
             });
         }
     }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelable(CURRENT_NOTE, currentNote);
         super.onSaveInstanceState(outState);
     }
 
@@ -94,49 +107,14 @@ public class NoteInfoListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         isLandscape = getResources().getConfiguration().orientation
                 == Configuration.ORIENTATION_LANDSCAPE;
-        if (savedInstanceState != null) {
-            currentNote = savedInstanceState.getParcelable(CURRENT_NOTE);
-        } else {
-            currentNote = new Note(getResources().getStringArray(R.array.noteTitle)[0],
-                    getResources().getStringArray(R.array.noteDescription)[0],
-                    getResources().getStringArray(R.array.noteText)[0],
-                    stringToDate(DATE_FORMAT_PATTERN, getResources().getStringArray(R.array.noteDate)[0]));
-        }
-        if (isLandscape) {
-            openLandNote(currentNote);
-        }
     }
 
-    private void openNote(Note currentNote) {
-        if (isLandscape) {
-            openLandNote(currentNote);
-        } else {
-            openPortNote(currentNote);
-        }
+    public FragmentType getFragmentType() {
+        return fragmentType;
     }
 
-    private void openLandNote(Note currentNote) {
-        NoteDataFragment detail = NoteDataFragment.newInstance(currentNote);
-        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentNoteData, detail);
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.commit();
+    public Note[] getNotes() {
+        return notes;
     }
 
-    private void openPortNote(Note currentNote) {
-        Intent intent = new Intent();
-        intent.setClass(getActivity(), NoteDataActivity.class);
-        intent.putExtra(NoteDataFragment.ARG_NOTE, currentNote);
-        startActivity(intent);
-    }
-
-    private Date stringToDate(String dateFormatPattern, String stringDate) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern);
-        try {
-            return dateFormat.parse(stringDate);
-        } catch (ParseException e) {
-            return new Date();
-        }
-    }
 }

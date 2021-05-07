@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/aboutScreen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top|center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/aboutScreenTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/aboutScreenTitle"
+        android:textSize="@dimen/aboutScreenTitleTextSize" />
+
+    <TextView
+        android:id="@+id/aboutScreenMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/aboutScreenMessage"
+        android:textSize="@dimen/aboutScreenMessageTextSize" />
+
+</LinearLayout>
