@@ -7,30 +7,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import com.geekbrains.androidlevel1.FragmentTypes.FragmentType;
 
 
 import com.geekbrains.androidlevel1.event_bus.EventBus;
+import com.geekbrains.androidlevel1.model.NoteCardSourceImplementation;
 
 // Этот фрагмент позволяет просматривать список заметок.
 public class NoteInfoListFragment extends Fragment {
     private final FragmentType fragmentType = FragmentType.NOTE_INFO_LIST;
     private boolean isLandscape;
-    private static final String DATE_FORMAT_PATTERN = "dd.MM.yyyy";
     private Note[] notes;
+    private NotesAdapter adapter;
 
     public static NoteInfoListFragment newInstance() {
         NoteInfoListFragment f = new NoteInfoListFragment();
@@ -48,7 +55,7 @@ public class NoteInfoListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loadNotes();
-        refreshNoteList(view);
+        initRecyclerView(view);
     }
 
     @Override
@@ -68,33 +75,19 @@ public class NoteInfoListFragment extends Fragment {
         notes = notesObject.getNotes();
     }
 
-    private void refreshNoteList(View view) {
-        LinearLayout layoutView = (LinearLayout) view;
-        for (int i = 0; i < notes.length; i++) {
-            CardView noteContainer = new CardView(getContext());
-            LinearLayout noteLayout = new LinearLayout(getContext());
-            noteLayout.setOrientation(LinearLayout.VERTICAL);
-            TextView noteTitle = new TextView(getContext());
-            noteTitle.setTextSize(getResources().getDimension(R.dimen.noteTitleTextSize));
-            noteTitle.setText(notes[i].getTitle());
-            TextView noteDescription = new TextView(getContext());
-            noteDescription.setTextSize(getResources().getDimension(R.dimen.noteInfoTextSize));
-            noteDescription.setText(notes[i].getDescription());
-            TextView noteDate = new TextView(getContext());
-            DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT_PATTERN);
-            noteDate.setTextSize(getResources().getDimension(R.dimen.noteInfoTextSize));
-            noteDate.setText(dateFormat.format(notes[i].getDate()));
-            noteLayout.addView(noteTitle);
-            noteLayout.addView(noteDescription);
-            noteLayout.addView(noteDate);
-            noteContainer.addView(noteLayout);
-            layoutView.addView(noteContainer);
-            final int fi = i;
-            noteContainer.setOnClickListener((v) -> {
+    private void initRecyclerView(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewLines);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        adapter = new NotesAdapter(new NoteCardSourceImplementation().getData());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter.SetOnItemClickListener(new NotesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
                 OpenNoteBehavior activity = (OpenNoteBehavior) getActivity();
-                activity.openNote(notes[fi]);
-            });
-        }
+                activity.openNote(notes[position]);
+            }
+        });
     }
 
     @Override
