@@ -8,18 +8,17 @@ import java.util.Date;
 // Сохранение заметок не реализовано.
 public class DefaultNotesLoad implements NotesSaveLoadBehavior {
     private Note[] notes;
-    private static final String DATE_FORMAT_PATTERN = "dd.MM.yyyy";
 
-    DefaultNotesLoad() {
+    public DefaultNotesLoad() {
         addDefaultNotes();
     }
 
     private void addDefaultNotes() {
         notes = new Note[2];
         notes[0] = new Note("Список дел", "Основное на сегодня",
-                "Покрасить забор зелёной краской", stringToDate(DATE_FORMAT_PATTERN, "07.05.2020"));
+                "Покрасить забор зелёной краской", Settings.stringToDate("07.05.2020 12:21:15"));
         notes[1] = new Note("Подарок другу", "Что-то для компьютера",
-                "Новый SSD или комплект RAM DDR4", stringToDate(DATE_FORMAT_PATTERN, "05.09.2020"));
+                "Новый SSD или комплект RAM DDR4", Settings.stringToDate("05.09.2020 17:01:54"));
     }
 
     @Override
@@ -36,13 +35,4 @@ public class DefaultNotesLoad implements NotesSaveLoadBehavior {
         return notes;
     }
 
-    // Метод позволяет переводить дату из строкового типа данных в тип данных Date по определённому паттерну.
-    private Date stringToDate(String dateFormatPattern, String stringDate) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern);
-        try {
-            return dateFormat.parse(stringDate);
-        } catch (ParseException e) {
-            return new Date();
-        }
-    }
 }
