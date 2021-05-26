@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements OpenNoteBehavior {
+public class MainActivity extends AppCompatActivity implements OpenNoteBehavior, UpdateNoteBehavior {
 
     private FragmentTypes.FragmentType mainContainer = null;
     private FragmentTypes.FragmentType container1 = null;
@@ -113,23 +113,23 @@ public class MainActivity extends AppCompatActivity implements OpenNoteBehavior 
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (!isOrientationLandscape()) {
-            switch (container2) {
-                case NOTE_DUMMY:
-                    mainContainer = FragmentTypes.FragmentType.NOTE_INFO_LIST;
-                default:
-                    mainContainer = container2;
-                    break;
+            if (container2 == FragmentTypes.FragmentType.NOTE_DUMMY) {
+                mainContainer = FragmentTypes.FragmentType.NOTE_INFO_LIST;
+            } else {
+                mainContainer = container2;
             }
-            outState.putString(MAIN_CONTAINER_KEY, mainContainer.toString());
+            if (mainContainer != null) {
+                outState.putString(MAIN_CONTAINER_KEY, mainContainer.toString());
+            }
         } else {
-            switch (mainContainer) {
-                case NOTE_INFO_LIST:
-                    container2 = FragmentTypes.FragmentType.NOTE_DUMMY;
-                default:
-                    container2 = mainContainer;
-                    break;
+            if (mainContainer == FragmentTypes.FragmentType.NOTE_INFO_LIST) {
+                container2 = FragmentTypes.FragmentType.NOTE_DUMMY;
+            } else {
+                container2 = mainContainer;
             }
-            outState.putString(CONTAINER2_KEY, container2.toString());
+            if (container2 != null) {
+                outState.putString(CONTAINER2_KEY, container2.toString());
+            }
         }
         if (currentNote != null) {
             outState.putParcelable(CURRENT_NOTE_KEY, currentNote);
@@ -230,6 +230,14 @@ public class MainActivity extends AppCompatActivity implements OpenNoteBehavior 
     public void openNote(Note note) {
         int targetContainer = (isOrientationLandscape()) ? R.id.fragmentContainer2 : R.id.mainFragmentContainer;
         NoteDataFragment data = NoteDataFragment.newInstance(note);
+        addFragmentToContainer(data, data.getFragmentType(), targetContainer);
+        currentNote = note;
+    }
+
+    @Override
+    public void updateNote(Note note) {
+        int targetContainer = (isOrientationLandscape()) ? R.id.fragmentContainer2 : R.id.mainFragmentContainer;
+        NoteUpdateFragment data = NoteUpdateFragment.newInstance(note);
         addFragmentToContainer(data, data.getFragmentType(), targetContainer);
         currentNote = note;
     }

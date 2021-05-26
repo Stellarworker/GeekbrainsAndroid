@@ -12,23 +12,44 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NoteCardSourceImplementation implements NoteCardSource {
-    private final List<NoteCardData> dataSource;
+    private List<NoteCardData> dataSource;
+    private List<Note> notes;
     private final NotesSaveLoadBehavior notesSaveLoad;
 
     public NoteCardSourceImplementation() {
         dataSource = new ArrayList<>(2);
         notesSaveLoad = new DefaultNotesLoad();
+        loadNotes();
+    }
+
+    private void loadNotes() {
+        notes = notesSaveLoad.getNotes();
+        for (Note note : notes) {
+            dataSource.add(new NoteCardData(
+                    note.getTitle(), note.getDescription(), Settings.dateToString(note.getDate()))
+            );
+        }
     }
 
     @Override
     public List<NoteCardData> getData() {
-        Note[] notes = notesSaveLoad.getNotes();
-        for (int i = 0; i < notes.length; i++) {
-            dataSource.add(new NoteCardData(
-                    notes[i].getTitle(), notes[i].getDescription(), Settings.dateToString(notes[i].getDate()))
-            );
-        }
-        return dataSource;
+       return dataSource;
     }
 
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public void deleteNote (int position) {
+        dataSource.remove(position);
+        notes.remove(position);
+    }
+
+    public void addCardData(NoteCardData card) {
+        dataSource.add(card);
+    }
+
+    public void addNote(Note note) {
+        notes.add(note);
+    }
 }

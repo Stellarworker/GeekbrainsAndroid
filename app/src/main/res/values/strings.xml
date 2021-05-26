@@ -11,4 +11,11 @@
     <string name="fragment_navigation">Заметки</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="createNew">Новая заметка</string>
+    <string name="update">Изменить</string>
+    <string name="delete">Удалить</string>
+    <string name="noteUpdateScreenTitle">Название</string>
+    <string name="noteUpdateScreenDescription">Описание</string>
+    <string name="noteUpdateScreenDate">Дата</string>
+    <string name="noteUpdateScreenText">Текст заметки</string>
 </resources>
