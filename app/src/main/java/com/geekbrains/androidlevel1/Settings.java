@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Settings {
-    private static final String DEFAULT_DATE_TIME_PATTERN = "dd.MM.yyyy HH:mm:ss";
+    private static final String DEFAULT_DATE_TIME_PATTERN = "dd.MM.yyyy HH:mm";
     private static String dateTimePattern = DEFAULT_DATE_TIME_PATTERN;
 
     private static void setDefaultSettings() {

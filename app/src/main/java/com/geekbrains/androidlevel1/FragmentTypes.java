@@ -5,6 +5,7 @@ public class FragmentTypes {
     public enum FragmentType {
         NOTE_INFO_LIST,
         NOTE_DATA,
+        NOTE_UPDATE,
         NOTE_DUMMY,
         ABOUT,
         SETTINGS

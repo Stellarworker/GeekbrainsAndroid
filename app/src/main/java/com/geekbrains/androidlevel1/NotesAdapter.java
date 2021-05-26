@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.geekbrains.androidlevel1.model.NoteCardData;
@@ -20,10 +21,18 @@ import java.util.List;
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> {
     private List<NoteCardData> dataSource;
     private Context context;
+    private Fragment fragment;
     private OnItemClickListener itemClickListener;
+    private int menuPosition;
 
-    public NotesAdapter(List<NoteCardData> dataSource) {
+
+    public NotesAdapter(List<NoteCardData> dataSource, Fragment fragment) {
         this.dataSource = dataSource;
+        this.fragment = fragment;
+    }
+
+    public int getMenuPosition() {
+        return menuPosition;
     }
 
     @NonNull
@@ -37,9 +46,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NoteCardData data = dataSource.get(position);
-        holder.title.setText(data.getTitle());
-        holder.description.setText(data.getDescription());
-        holder.date.setText(data.getDate());
+        holder.bind(data);
     }
 
     @Override
@@ -65,14 +72,28 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             title = itemView.findViewById(R.id.noteTitle);
             description = itemView.findViewById(R.id.noteDescription);
             date = itemView.findViewById(R.id.noteDate);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (itemClickListener != null) {
-                        itemClickListener.onItemClick(v, getAdapterPosition());
-                    }
+            registerContextMenu(itemView);
+            itemView.setOnClickListener(v -> {
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(v, getAdapterPosition());
                 }
             });
+        }
+
+        public void bind(NoteCardData data) {
+            title.setText(data.getTitle());
+            description.setText(data.getDescription());
+            date.setText(data.getDate());
+        }
+
+        private void registerContextMenu(@NonNull View itemView) {
+            if (fragment != null) {
+                itemView.setOnLongClickListener(v -> {
+                    menuPosition = getLayoutPosition();
+                    return false;
+                });
+                fragment.registerForContextMenu(itemView);
+            }
         }
 
     }
